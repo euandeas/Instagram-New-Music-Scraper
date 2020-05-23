@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.105
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Instagram New Music Scraper", "Instagram New Music Scraper\Instagram New Music Scraper.pyproj", "{FCFCD098-FCE3-473F-A199-7CFB7DA92652}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FCFCD098-FCE3-473F-A199-7CFB7DA92652}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCFCD098-FCE3-473F-A199-7CFB7DA92652}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {81130A55-A5CF-41B5-A4A1-4E4222BBE123}
+	EndGlobalSection
+EndGlobal
