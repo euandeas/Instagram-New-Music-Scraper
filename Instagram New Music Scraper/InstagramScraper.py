@@ -1,6 +1,7 @@
 from selenium import webdriver
 import os
 import time
+import getpass
 
 def BootDriver():
     currentPath = (os.path.abspath(os.getcwd()))
@@ -14,8 +15,8 @@ def BootDriver():
     return driver
 
 def Login(driver):
-    driver.find_element_by_name("username").send_keys("")
-    driver.find_element_by_name("password").send_keys("")
+    driver.find_element_by_name("username").send_keys(input("Enter Username: "))
+    driver.find_element_by_name("password").send_keys(getpass.getpass("Enter Password: "))
     driver.find_element_by_xpath("//button[@type='submit']").click()
     time.sleep(3)
     driver.find_element_by_xpath("//button[contains(text(), 'Not Now')]").click()
