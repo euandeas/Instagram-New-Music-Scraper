@@ -5,3 +5,4 @@ data = scraper.scrapedata(20)
 del scraper
 
 print(data)
+input()

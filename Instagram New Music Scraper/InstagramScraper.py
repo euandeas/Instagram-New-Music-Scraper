@@ -3,6 +3,7 @@ import os
 import time
 import getpass
 
+
 class InstagramScraper():
 
     def __BootDriver(self):
@@ -36,6 +37,7 @@ class InstagramScraper():
         This function handles the scraping of the data from the instagram site and then returns that data as a 2D list.
         """
         scrapeddata = []
+        finaldata = []
         driver = self.driver
 
         #Loads in extra posts so that the loop can start without throwing any errors due to missing data.
@@ -56,7 +58,9 @@ class InstagramScraper():
                 pass
             desc = driver.find_element_by_xpath("//span[@class='_8Pl3R']")
 
-            scrapeddata.append([username.text, desc.text])
+            date = driver.find_element_by_xpath("//time[@class='_1o9PC Nzb55']")
+
+            scrapeddata.append([username.text, desc.text, date.text])
 
             #This is the part which moves the posts along.
             try:
@@ -65,7 +69,11 @@ class InstagramScraper():
                 webdriver.ActionChains(driver).move_to_element(wholeposts[4]).perform()
             time.sleep(2)
 
-        return scrapeddata
+        for x in scrapeddata:
+            if x not in finaldata:
+                finaldata.append(x)
+
+        return finaldata
 
     def __init__(self):
         self.driver = self.__BootDriver()
