@@ -51,16 +51,16 @@ class InstagramScraper():
             wholeposts = driver.find_elements_by_xpath("//article[@class='_8Rm4L M9sTE  L_LMM SgTZ1   ePUX4' or @class='_8Rm4L M9sTE  L_LMM SgTZ1  Tgarh ePUX4']")
         
             #Scrapes data from top loaded post
-            username = driver.find_element_by_xpath("//a[@class='FPmhX notranslate MBL3Z']")
+            username = driver.find_element_by_xpath("//a[@class='FPmhX notranslate MBL3Z']").text
             try:
                 driver.execute_script("arguments[0].click();", driver.find_element_by_xpath("//span[@class='_8Pl3R']").find_element_by_xpath("//button[@class='sXUSN']"))
             except:
                 pass
-            desc = driver.find_element_by_xpath("//span[@class='_8Pl3R']")
+            desc = driver.find_element_by_xpath("//span[@class='_8Pl3R']").text
 
-            date = driver.find_element_by_xpath("//time[@class='_1o9PC Nzb55']")
+            date = driver.find_element_by_xpath("//time[@class='_1o9PC Nzb55']").text
 
-            scrapeddata.append([username.text, desc.text, date.text])
+            scrapeddata.append([username, desc, date])
 
             #This is the part which moves the posts along.
             try:
