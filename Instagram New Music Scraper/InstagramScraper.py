@@ -28,13 +28,13 @@ class InstagramScraper():
         driver.find_element_by_name("username").send_keys(input("Enter Username: "))
         driver.find_element_by_name("password").send_keys(getpass.getpass("Enter Password: "))
         driver.find_element_by_xpath("//button[@type='submit']").click()
-        time.sleep(3)
+        time.sleep(4)
         driver.find_element_by_xpath("//button[contains(text(), 'Not Now')]").click()
         time.sleep(5)
 
-    def scrapedata(self, postsNumber):
+    def scrapedataquick(self, postsNumber):
         """
-        This function handles the scraping of the data from the instagram site and then returns that data as a 2D list.
+        This function handles the scraping of the data from the instagram site and then returns that data as a 2D list, it may be less accurate and miss some posts.
         """
         scrapeddata = []
         finaldata = []
@@ -52,21 +52,29 @@ class InstagramScraper():
         
             #Scrapes data from top loaded post
             username = wholeposts[0].find_element_by_xpath("//a[@class='sqdOP yWX7d     _8A5w5   ZIAjV ']").text
+            date = wholeposts[0].find_element_by_xpath("//time[@class='_1o9PC Nzb55']").text
 
+            time.sleep(2)
             try:
-                driver.execute_script("arguments[0].click();", driver.find_element_by_xpath("//span[@class='_8Pl3R']").find_element_by_xpath("//button[@class='sXUSN']"))
+                morebutton = driver.find_element_by_xpath("//span[@class='_8Pl3R']").find_element_by_xpath("//button[@class='sXUSN']")
+                driver.execute_script("arguments[0].click();", morebutton)
             except:
                 pass
             
-            try:
-                desc = wholeposts[0].find_element_by_xpath("//span[@class='_8Pl3R']").text
-            except:
-                desc = "na"
-
-            date = wholeposts[0].find_element_by_xpath("//time[@class='_1o9PC Nzb55']").text
+            desc = ""
+            breakloop = False
+            for x in range(10):
+                try:
+                    desc = wholeposts[0].find_element_by_xpath("//span[@class='_8Pl3R']").text
+                    breakloop = True
+                except:
+                    driver.execute_script("arguments[0].click();", driver.find_element_by_xpath("//span[@class='_8Pl3R']"))
+                if breakloop == True:
+                    break
 
             scrapeddata.append([username, desc, date])
 
+            time.sleep(2)
             #This is the part which moves the posts along.
             try:
                 webdriver.ActionChains(driver).move_to_element(wholeposts[5]).perform()
@@ -76,7 +84,70 @@ class InstagramScraper():
 
         for x in scrapeddata:
             if x not in finaldata:
-                finaldata.append(x)
+                if x != ["","",""]:
+                    finaldata.append(x)
+
+        return finaldata
+
+    def scrapedataslow(self, postsNumber):
+        """
+        This function handles the scraping of the data from the instagram site and then returns that data as a 2D list, this is alot more accurate, use this at all costs unless not possible.
+        """
+        scrapeddata = []
+        finaldata = []
+        driver = self.driver
+
+        #Loads in extra posts so that the loop can start without throwing any errors due to missing data.
+        wholeposts = driver.find_elements_by_xpath("//article[@class='_8Rm4L M9sTE  L_LMM SgTZ1   ePUX4' or @class='_8Rm4L M9sTE  L_LMM SgTZ1  Tgarh ePUX4']")
+        webdriver.ActionChains(driver).move_to_element(wholeposts[2]).perform()
+
+        #This increments its way through the posts one by one and scrapes the needed data from each post.
+        #This data is then added to a list to be stored.
+        for x in range(0, postsNumber):
+            #Gathers all currently loaded posts.
+            wholeposts = driver.find_elements_by_xpath("//article[@class='_8Rm4L M9sTE  L_LMM SgTZ1   ePUX4' or @class='_8Rm4L M9sTE  L_LMM SgTZ1  Tgarh ePUX4']")
+            
+            moreButtonsLeft = True
+            while moreButtonsLeft == True:
+                try:
+                    morebutton = driver.find_element_by_xpath("//span[@class='_8Pl3R']").find_element_by_xpath("//button[@class='sXUSN']")
+                    driver.execute_script("arguments[0].click();", morebutton)
+                except:
+                    moreButtonsLeft = False
+            
+            for post in wholeposts:
+                username = ""
+                date = ""
+                desc = ""
+
+                try:
+                    username = post.find_element_by_xpath("//a[@class='sqdOP yWX7d     _8A5w5   ZIAjV ']").text
+                except:
+                    pass
+                try:
+                     date = post.find_element_by_xpath("//time[@class='_1o9PC Nzb55']").text
+                except:
+                    pass
+                try:
+                    desc = post.find_element_by_xpath("//span[@class='_8Pl3R']").text
+                except:
+                    pass
+
+                scrapeddata.append([username, desc, date])
+                time.sleep(0.5)
+            
+            time.sleep(1)
+            #This is the part which moves the posts along.
+            try:
+                webdriver.ActionChains(driver).move_to_element(wholeposts[5]).perform()
+            except:
+                webdriver.ActionChains(driver).move_to_element(wholeposts[4]).perform()
+            time.sleep(1.5)
+
+        for x in scrapeddata:
+            if x not in finaldata:
+                if x != ["","",""]:
+                    finaldata.append(x)
 
         return finaldata
 

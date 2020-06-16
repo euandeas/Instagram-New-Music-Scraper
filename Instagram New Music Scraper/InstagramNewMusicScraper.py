@@ -1,7 +1,9 @@
 from InstagramScraper import InstagramScraper
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
+import nltk
 import json
+import random
 
 def ProcessData(sentence):
     tokens= word_tokenize(sentence)
@@ -17,10 +19,13 @@ def SaveTestData(data):
     json.dump(data, file)
     file.close()
 
-def ReadData():
+def ReadData(random):
     file = open("TestData.txt")
     data = json.load(file)
-    return data
+    if random == True:
+        return random.shuffle(data)
+    else:
+        return data
 
 def ManualClassify(data):
     for x in data:
@@ -32,16 +37,29 @@ def ManualClassify(data):
             print(y)
     return data
 
+def FindFeatures():
+    return
+
 scraper = InstagramScraper()
-data = scraper.scrapedata(100)
+data = scraper.scrapedataslow(30)
 del scraper
 
 processeddata = []
 
 for x in data:
-    processeddata.append(processedata(x[1]))
+    processeddata.append(ProcessData(x[1]))
 
-print(cleaneddata)
+all_words = []
+for s in processeddata:
+    for w in s:
+        all_words.append(w)
+
+for a in data:
+    print(a)
+print(all_words)
+
+all_words = nltk.FreqDist(all_words)
+print(all_words.most_common(10))
 input()
 
 
