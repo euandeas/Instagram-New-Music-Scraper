@@ -1,6 +1,9 @@
 from InstagramScraper import InstagramScraper
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.model_selection import train_test_split
+from sklearn import svm
 import nltk
 import json
 import random
@@ -37,19 +40,37 @@ def ManualClassify(data):
             print(y)
     return data
 
-def FindFeatures():
-    return
+def TFIDFConverter(data):
+    def dummy_fun(doc):
+        return doc
+
+    tfidfconverter = TfidfVectorizer(analyzer='word',tokenizer=dummy_fun,preprocessor=dummy_fun,token_pattern=None)
+    return tfidfconverter.fit_transform(data).toarray()
+
 
 scraper = InstagramScraper()
-data = scraper.scrapedataslow(30)
+data = scraper.scrapedataslow(100)
 del scraper
 
-processeddata = []
+data = ManualClassify(data)
 
-for x in data:
-    processeddata.append(ProcessData(x[1]))
+SaveTestData(data)
 
+#processeddata = []
 
-input()
+#for x in data:
+#    processeddata.append(ProcessData(x[1]))
+
+#tfidfData = TFIDFConverter(processeddata)
+
+#X_train, X_test, y_train, y_test = train_test_split(tfidfData, data, test_size=0.5, random_state=0)
+
+#clf = svm.SVC()
+#clf.fit(X_train, y_train[3])
+
+#y_pred = classifier.predict(X_test)
+
+#print(y_pred)
+#input()
 
 
