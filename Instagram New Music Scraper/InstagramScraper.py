@@ -36,63 +36,6 @@ class InstagramScraper():
             except:
                 pass
 
-    def scrapedataquick(self, postsNumber):
-        """
-        This function handles the scraping of the data from the instagram site and then returns that data as a 2D list, it may be less accurate and miss some posts.
-        """
-        scrapeddata = []
-        finaldata = []
-        driver = self.driver
-
-        #Loads in extra posts so that the loop can start without throwing any errors due to missing data.
-        wholeposts = driver.find_elements_by_xpath("//article[@class='_8Rm4L M9sTE  L_LMM SgTZ1   ePUX4' or @class='_8Rm4L M9sTE  L_LMM SgTZ1  Tgarh ePUX4']")
-        webdriver.ActionChains(driver).move_to_element(wholeposts[2]).perform()
-
-        #This increments its way through the posts one by one and scrapes the needed data from each post.
-        #This data is then added to a list to be stored.
-        for x in range(0, postsNumber):
-            #Gathers all currently loaded posts.
-            wholeposts = driver.find_elements_by_xpath("//article[@class='_8Rm4L M9sTE  L_LMM SgTZ1   ePUX4' or @class='_8Rm4L M9sTE  L_LMM SgTZ1  Tgarh ePUX4']")
-        
-            #Scrapes data from top loaded post
-            username = wholeposts[0].find_element_by_xpath("//a[@class='sqdOP yWX7d     _8A5w5   ZIAjV ']").text
-            date = wholeposts[0].find_element_by_xpath("//time[@class='_1o9PC Nzb55']").text
-
-            time.sleep(2)
-            try:
-                morebutton = driver.find_element_by_xpath("//span[@class='_8Pl3R']").find_element_by_xpath("//button[@class='sXUSN']")
-                driver.execute_script("arguments[0].click();", morebutton)
-            except:
-                pass
-            
-            desc = ""
-            breakloop = False
-            for x in range(10):
-                try:
-                    desc = wholeposts[0].find_element_by_xpath("//span[@class='_8Pl3R']").text
-                    breakloop = True
-                except:
-                    driver.execute_script("arguments[0].click();", driver.find_element_by_xpath("//span[@class='_8Pl3R']"))
-                if breakloop == True:
-                    break
-
-            scrapeddata.append([username, desc, date])
-
-            time.sleep(2)
-            #This is the part which moves the posts along.
-            try:
-                webdriver.ActionChains(driver).move_to_element(wholeposts[5]).perform()
-            except:
-                webdriver.ActionChains(driver).move_to_element(wholeposts[4]).perform()
-            time.sleep(2)
-
-        for x in scrapeddata:
-            if x not in finaldata:
-                if x != ["","",""]:
-                    finaldata.append(x)
-
-        return finaldata
-
     def scrapedataslow(self, postsNumber):
         """
         This function handles the scraping of the data from the instagram site and then returns that data as a 2D list, this is alot more accurate, use this at all costs unless not possible.
