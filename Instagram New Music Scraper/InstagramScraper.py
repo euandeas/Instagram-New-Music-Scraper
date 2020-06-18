@@ -29,8 +29,12 @@ class InstagramScraper():
         driver.find_element_by_name("password").send_keys(getpass.getpass("Enter Password: "))
         driver.find_element_by_xpath("//button[@type='submit']").click()
         time.sleep(4)
-        driver.find_element_by_xpath("//button[contains(text(), 'Not Now')]").click()
-        time.sleep(5)
+        for x in range(2):
+            try:
+                driver.find_element_by_xpath("//button[contains(text(), 'Not Now')]").click()
+                time.sleep(4)
+            except:
+                pass
 
     def scrapedataquick(self, postsNumber):
         """
