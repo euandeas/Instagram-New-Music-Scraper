@@ -45,9 +45,9 @@ class InstagramScraper():
         driver = self.driver
 
         #This makes sure all the latest data is loaded from instagram, due to its non chronological nature.
-        #for refreshcount in range(10):
-            #driver.refresh()
-            #time.sleep(2)
+        for refreshcount in range(10):
+            driver.refresh()
+            time.sleep(2)
 
         #Loads in extra posts so that the loop can start without throwing any errors due to missing data.
         wholeposts = driver.find_elements_by_xpath("//article[@class='_8Rm4L M9sTE  L_LMM SgTZ1   ePUX4' or @class='_8Rm4L M9sTE  L_LMM SgTZ1  Tgarh ePUX4']")
@@ -89,15 +89,14 @@ class InstagramScraper():
                 scrapeddata.append([username, desc, date])
                 time.sleep(0.5)
             
+            
             time.sleep(1)
+            wholeposts = driver.find_elements_by_xpath("//article[@class='_8Rm4L M9sTE  L_LMM SgTZ1   ePUX4' or @class='_8Rm4L M9sTE  L_LMM SgTZ1  Tgarh ePUX4']")
             #This is the part which moves the posts along.
             try:
-                webdriver.ActionChains(driver).move_to_element(wholeposts[6]).perform()  
+                webdriver.ActionChains(driver).move_to_element(wholeposts[5]).perform()
             except:
-                try:
-                    webdriver.ActionChains(driver).move_to_element(wholeposts[5]).perform()
-                except:
-                    webdriver.ActionChains(driver).move_to_element(wholeposts[4]).perform()
+                webdriver.ActionChains(driver).move_to_element(wholeposts[4]).perform()
             time.sleep(2)
 
         for x in scrapeddata:

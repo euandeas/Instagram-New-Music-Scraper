@@ -18,7 +18,7 @@ def ProcessData(sentence):
     return stopwordsremoved
 
 def SaveTestData(data):
-    file = open("TestData.txt", w)
+    file = open("TestData.txt", "w")
     json.dump(data, file)
     file.close()
 
@@ -32,6 +32,7 @@ def ReadData(random):
 
 def ManualClassify(data):
     for x in data:
+        print(x)
         x.append(input())
     print("CLASSIFICATION COMPLETE")
     show = input("Show resulting data? y/n:")
@@ -49,7 +50,7 @@ def TFIDFConverter(data):
 
 
 scraper = InstagramScraper()
-data = scraper.scrapedataslow(100)
+data = scraper.scrapedataslow(200)
 del scraper
 
 data = ManualClassify(data)
@@ -63,10 +64,10 @@ SaveTestData(data)
 
 #tfidfData = TFIDFConverter(processeddata)
 
-#X_train, X_test, y_train, y_test = train_test_split(tfidfData, data, test_size=0.5, random_state=0)
+#X_train, X_test, y_train, y_test, raw_train, raw_test = train_test_split(tfidfData, [i[3] for i in data], data, test_size=0.5, random_state=0)
 
 #clf = svm.SVC()
-#clf.fit(X_train, y_train[3])
+#clf.fit(X_train, y_train)
 
 #y_pred = classifier.predict(X_test)
 
