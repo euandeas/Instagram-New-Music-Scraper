@@ -18,13 +18,14 @@ def ProcessData(sentence):
     return stopwordsremoved
 
 def SaveTestData(data):
-    file = open("TestData.txt", "w")
-    json.dump(data, file)
+    file = open("TestData.json", "w")
+    json.dump(data, file, indent=2)
     file.close()
 
 def ReadData(random):
-    file = open("TestData.txt")
+    file = open("TestData.json", "r")
     data = json.load(file)
+    file.close()
     if random == True:
         return random.shuffle(data)
     else:
@@ -50,7 +51,7 @@ def TFIDFConverter(data):
 
 
 scraper = InstagramScraper()
-data = scraper.scrapedataslow(200)
+data = scraper.scrapedataslow(2)
 del scraper
 
 data = ManualClassify(data)
