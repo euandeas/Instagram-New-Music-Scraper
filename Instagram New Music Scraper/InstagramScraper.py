@@ -72,6 +72,7 @@ class InstagramScraper():
                 username = ""
                 date = ""
                 desc = ""
+                posthref = ""
 
                 try:
                     username = post.find_element_by_xpath("//a[@class='sqdOP yWX7d     _8A5w5   ZIAjV ']").text
@@ -82,11 +83,15 @@ class InstagramScraper():
                 except:
                     pass
                 try:
+                    posthref = post.find_element_by_xpath("//a[@class='c-Yi7']").get_attribute('href')
+                except:
+                    pass
+                try:
                     desc = post.find_element_by_xpath("//span[@class='_8Pl3R']").text
                 except:
                     pass
 
-                scrapeddata.append([username, desc, date])
+                scrapeddata.append([username, desc, date, posthref])
                 time.sleep(0.5)
             
             
