@@ -8,7 +8,6 @@ These are the different catergories that a post could be put into:
  - New Music - nm
  - New Mix/Previous Event - mpe
  - Upcoming Event - ue
- - Not English - ne
- - Misc - misc
+ - Misc and non english - misc
  
  P.S: This project is very work in progress, any extra details will be added further into the project
