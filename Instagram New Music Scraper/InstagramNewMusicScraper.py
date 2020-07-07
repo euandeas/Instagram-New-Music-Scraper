@@ -4,6 +4,7 @@ from nltk.corpus import stopwords
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
 from sklearn import svm
+from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
 import nltk
 import json
 import random
@@ -42,37 +43,44 @@ def ManualClassify(data):
             print(y)
     return data
 
-def TFIDFConverter(data):
-    def dummy_fun(doc):
-        return doc
 
-    tfidfconverter = TfidfVectorizer(analyzer='word',tokenizer=dummy_fun,preprocessor=dummy_fun,token_pattern=None)
-    return tfidfconverter.fit_transform(data).toarray()
+def dummy_fun(doc):
+    return doc
 
+processeddata = []
+
+data = ReadData(False)
+
+for x in data:
+    processeddata.append(ProcessData(x[1]))
+
+tfidfconverter = TfidfVectorizer(analyzer='word',tokenizer=dummy_fun,preprocessor=dummy_fun,token_pattern=None)
+tfidfData = tfidfconverter.fit_transform(processeddata).toarray()
+
+X_train, X_test, y_train, y_test, raw_train, raw_test = train_test_split(tfidfData, [i[4] for i in data], data, test_size=0.35, random_state=0)
+
+clf = svm.LinearSVC()
+clf.fit(X_train, y_train)
+
+y_pred = clf.predict(X_test)
+
+print(classification_report(y_test,y_pred))
+print(accuracy_score(y_test, y_pred))
+
+#for x in range(100):
+    #print(X_test[x], " ", raw_test[x], " ",y_pred[x])
+    #print("/n")
 
 scraper = InstagramScraper()
-data = scraper.scrapedataslow(250)
+data = scraper.scrapedataslow(10)
 del scraper
 
-data = ManualClassify(data)
-
-SaveTestData(data)
-
-#processeddata = []
-
-#for x in data:
-#    processeddata.append(ProcessData(x[1]))
-
-#tfidfData = TFIDFConverter(processeddata)
-
-#X_train, X_test, y_train, y_test, raw_train, raw_test = train_test_split(tfidfData, [i[4] for i in data], data, test_size=0.5, random_state=0)
-
-#clf = svm.SVC()
-#clf.fit(X_train, y_train)
-
-#y_pred = classifier.predict(X_test)
-
-#print(y_pred)
-#input()
+for x in data:
+    procinput = ProcessData(x[1])
+    tfidfData1 = tfidfconverter.transform(procinput)
+    new_pred = clf.predict(tfidfData1)
+    print(x, " ", new_pred)
+    print(" ")
+input()
 
 

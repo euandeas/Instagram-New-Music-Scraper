@@ -25,6 +25,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="InstagramNewMusicScraper.py" />
+    <Compile Include="SVMClassifierBuilder.py">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="TestData.json" />
