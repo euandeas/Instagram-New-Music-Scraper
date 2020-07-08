@@ -36,7 +36,7 @@ class InstagramScraper():
             except:
                 pass
 
-    def scrapedataslow(self, postsNumber):
+    def scrapedataslow(self, postsNumber, refresh):
         """
         This function handles the scraping of the data from the instagram site and then returns that data as a 2D list, this is alot more accurate, use this at all costs unless not possible.
         """
@@ -45,9 +45,10 @@ class InstagramScraper():
         driver = self.driver
 
         #This makes sure all the latest data is loaded from instagram, due to its non chronological nature.
-        for refreshcount in range(10):
-            driver.refresh()
-            time.sleep(2)
+        if refresh == True:
+            for refreshcount in range(10):
+                driver.refresh()
+                time.sleep(2)
 
         #Loads in extra posts so that the loop can start without throwing any errors due to missing data.
         wholeposts = driver.find_elements_by_xpath("//article[@class='_8Rm4L M9sTE  L_LMM SgTZ1   ePUX4' or @class='_8Rm4L M9sTE  L_LMM SgTZ1  Tgarh ePUX4']")
