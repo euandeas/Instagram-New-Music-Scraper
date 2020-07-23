@@ -17,7 +17,7 @@ def ProcessData(sentence):
     return stopwordsremoved
 
 def SaveTestData(data):
-    file = open("TestData.json", "w")
+    file = open("TestData2.json", "w")
     json.dump(data, file, indent=2)
     file.close()
 
@@ -54,19 +54,34 @@ svmmodel.trainmodel(data, processeddata)
 
 
 scraper = InstagramScraper()
-data = scraper.scrapedataslow(10, False)
+newdata = scraper.scrapedataslow(250, True)
 del scraper
 
-for x in data:
-    procinput = ProcessData(x[1])
-    if procinput != []:
-        tfdata = svmmodel.tfidfconverter.transform(procinput)
-        new_pred = svmmodel.clf.predict([tfdata].reshape(-1, 1))
-        print(x, " ", new_pred)
-        print(" ")
-    else:
-        print(x, " misc")
-        print(" ")
-input()
+newdata2 = ManualClassify(newdata)
 
+SaveTestData(newdata2)
 
+# works for single sample testing
+#for n in newdata:
+#    procinput = []
+#    procinput.append(ProcessData(n[1]))
+#    if procinput != []:
+#        tfdata = svmmodel.tfidfconverter.transform(procinput).toarray()
+#        new_pred = svmmodel.clf.predict(tfdata)
+#        print(n, " ", new_pred)
+#        print(" ")
+#    else:
+#        print(x, " misc")
+#        print(" ")
+
+#input()
+#testing = []
+#for x in newdata:
+#    testing.append(ProcessData(x[1]))
+    
+#tfdata = svmmodel.tfidfconverter.transform(testing).toarray()
+#new_pred = svmmodel.clf.predict(tfdata)
+
+#for n in range(5):
+#    print(newdata[n], " ", new_pred[n])
+#    print(" ")
