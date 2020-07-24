@@ -21,6 +21,9 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="DataProcessor.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="InstagramScraper.py">
       <SubType>Code</SubType>
     </Compile>
