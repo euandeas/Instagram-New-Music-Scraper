@@ -1,13 +1,11 @@
 from sklearn.model_selection import train_test_split
-from sklearn import svm
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
 import pickle
 import DataProcessor
 
-class SVMModel():
+class SCModel():
     
     tfidfconverter = DataProcessor.TFIDFConverter()
-    clf = svm.LinearSVC()
         
     def TrainModel(self, data, processeddata):
         
@@ -29,12 +27,11 @@ class SVMModel():
         print(newdata, " ", pred)
         print(" ")
 
-    def SaveModel(self):
-        pickle.dump(self.clf, open("finalizedSVM_model.p", 'wb'))
+    def SaveModel(self, filename):
+        pickle.dump(self.clf, open(filename, 'wb'))
 
-    def ReadModel(self):
-        self.clf = pickle.load(open("finalizedSVM_model.p", 'rb'))
+    def ReadModel(self, name):
+        self.clf = pickle.load(open(finalname, 'rb'))
 
-
-
-
+    def __init__(self, method): 
+        self.clf = method

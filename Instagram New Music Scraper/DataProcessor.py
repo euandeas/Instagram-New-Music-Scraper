@@ -41,12 +41,15 @@ def Process(sentence):
 
 class TFIDFConverter():
 
+    def dummy_fun(doc):
+        return doc
+
     tfidfconverter = TfidfVectorizer(analyzer='word',tokenizer=dummy_fun,preprocessor=dummy_fun,token_pattern=None)
 
     def Fit_Transform(self, data):
         return self.tfidfconverter.fit_transform(data).toarray()
     
-    def Transform(self):
+    def Transform(self, processed):
         return self.tfidfconverter.transform(processed).toarray()
 
     def SaveVectorizer(self):
