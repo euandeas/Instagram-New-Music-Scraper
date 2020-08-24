@@ -6,6 +6,9 @@ import DataProcessor
 class SCModel():
     
     tfidfconverter = DataProcessor.TFIDFConverter()
+    
+    def __init__(self, method): 
+        self.clf = method
         
     def TrainModel(self, data, processeddata):
         
@@ -32,6 +35,3 @@ class SCModel():
 
     def ReadModel(self, name):
         self.clf = pickle.load(open(finalname, 'rb'))
-
-    def __init__(self, method): 
-        self.clf = method
