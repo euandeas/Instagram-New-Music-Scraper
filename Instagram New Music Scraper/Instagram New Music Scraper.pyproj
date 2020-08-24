@@ -28,13 +28,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="InstagramNewMusicScraper.py" />
-    <Compile Include="NaiveBayesClassifiers.py">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="StandardClassifierModel.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="SVMClassifier.py">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

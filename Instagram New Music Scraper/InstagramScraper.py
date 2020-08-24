@@ -36,7 +36,7 @@ class InstagramScraper():
             except:
                 pass
 
-    def scrapedataslow(self, postsNumber, refresh):
+    def scrapedata(self, postsNumber, refresh):
         """
         This function handles the scraping of the data from the instagram site and then returns that data as a 2D list, this is alot more accurate, use this at all costs unless not possible.
         """
